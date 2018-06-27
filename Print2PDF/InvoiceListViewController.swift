@@ -7,6 +7,13 @@
 //
 
 import UIKit
+import UserNotifications
+
+
+
+@available(iOS 10.0, *)
+
+
 
 class InvoiceListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -14,15 +21,38 @@ class InvoiceListViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     var invoices: [[String: AnyObject]]!
-    
     var selectedInvoiceIndex: Int!
     
-    
+    //create notifications
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tblInvoices.delegate = self
         tblInvoices.dataSource = self
+        
+    }
+    
+    //import livechat
+  
+    
+    
+    func scheduleNotifications() {
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Pop Quiz!"
+        content.subtitle = "Let's see how smart you are!"
+        content.body = "How many countries are there in Africa?"
+        content.badge = 1
+        content.categoryIdentifier = "quizCategory"
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+        let requestIdentifier = "africaQuiz"
+        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+            // handle error
+        })
     }
 
     
@@ -133,5 +163,34 @@ class InvoiceListViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    
 }
+
+
+@available(iOS 10.0, *)
+extension InvoiceListViewController: UNUserNotificationCenterDelegate {
+    
+    //for displaying notification when app is in foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        //If you don't want to show notification when app is open, do something here else and make a return here.
+        //Even you you don't implement this delegate method, you will not see the notification on the specified controller. So, you have to implement this delegate and make sure the below line execute. i.e. completionHandler.
+        
+        completionHandler([.alert, .badge, .sound])
+    }
+    
+    // For handling tap and user actions
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        switch response.actionIdentifier {
+        case "action1":
+            print("Action First Tapped")
+        case "action2":
+            print("Action Second Tapped")
+        default:
+            break
+        }
+        completionHandler()
+    }
+}
+
+

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import LiveChat
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -35,6 +37,11 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtPrice: UITextField!
     
     
+    @IBAction func GotoChatView(_ sender: Any) {
+        //Presenting chat:
+        LiveChat.presentChat()
+        
+    }
     var currentTextfield: UITextField!
     
     var saveCompletionHandler: ((_ itemDescription: String, _ price: String) -> Void)!

@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import UserNotifications
+import LiveChat
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, LiveChatDelegate {
 
     var window: UIWindow?
 
@@ -18,8 +21,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+       
+        //Mark:Live chat definition and import
+        LiveChat.licenseId = "9498835" // Set your licence number here
+//        LiveChat.groupId = "88" // Optionally, you can set specific group
+        LiveChat.name = "iOS Widget Example" // User name and email can be provided if known
+        LiveChat.email = "ziyun@attitudetech.ie"
+        
+        // Setting some custom variables:
+        LiveChat.setVariable(withKey:"First variable name", value:"Some value")
+        LiveChat.setVariable(withKey:"Second name", value:"Other value")
+        
+        LiveChat.delegate = self
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { granted, error in
+            // handle error if there is one
+        })
+        let answerOne = UNNotificationAction(identifier: "answerOne", title: "29", options: [.foreground])
+        let answerTwo = UNNotificationAction(identifier: "answerTwo", title: "55", options: [.foreground])
+        let clue = UNNotificationAction(identifier: "clue", title: "Get a clue...", options: [.foreground])
+        
+        let quizCategory = UNNotificationCategory(identifier: "quizCategory", actions: [answerOne, answerTwo, clue], intentIdentifiers: [], options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([quizCategory])
         return true
     }
+    
+    
+    // MARK: LiveChatDelegate
+    
+    func received(message: LiveChatMessage) {
+        if (!LiveChat.isChatPresented) {
+            // Notifying user
+            let alert = UIAlertController(title: "Support", message: message.text, preferredStyle: .alert)
+            let chatAction = UIAlertAction(title: "Go to Chat", style: .default) { alert in
+                // Presenting chat if not presented:
+                if !LiveChat.isChatPresented {
+                    LiveChat.presentChat()
+                }
+            }
+            alert.addAction(chatAction)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            alert.addAction(cancelAction)
+            
+            window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+//    func handle(URL: URL) {
+//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//    }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -66,6 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getDocDir() -> String {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     }
+
     
 }
+
+
+
+
 

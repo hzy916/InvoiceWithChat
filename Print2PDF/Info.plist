@@ -30,6 +30,22 @@
 	<array>
 		<string>armv7</string>
 	</array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>dbapi-8-emm</string>
+        <string>dbapi-2</string>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>db-519rds2k5subs3t</string>
+                </array>
+                <key>CFBundleURLName</key>
+                <string></string>
+            </dict>
+        </array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
