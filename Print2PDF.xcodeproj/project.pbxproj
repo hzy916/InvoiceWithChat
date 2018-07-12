@@ -154,6 +154,7 @@
 				TargetAttributes = {
 					C0C9221C1D0FFDE5000D4607 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 7E2855LEH4;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -363,6 +364,7 @@
 			baseConfigurationReference = 044501C58768E6B3A6A57B45 /* Pods-Print2PDF.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7E2855LEH4;
 				INFOPLIST_FILE = Print2PDF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -377,6 +379,7 @@
 			baseConfigurationReference = DC4BBB4BFFEB255AEE2306A9 /* Pods-Print2PDF.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7E2855LEH4;
 				INFOPLIST_FILE = Print2PDF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

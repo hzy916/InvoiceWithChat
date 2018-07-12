@@ -17,6 +17,41 @@ class PreviewViewController: UIViewController {
     
     @IBOutlet weak var webPreview: UIWebView!
     
+    
+    @IBAction func GotoSupport(_ sender: Any) {
+        
+        performSegue(withIdentifier: "supportView", sender: self)
+    }
+    
+    
+    @IBAction func exportCSV(_ sender: Any) {
+        
+        let fileName = "report.csv"
+        
+        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        
+        var csvText = "EmployeeName,Started\n"
+        
+        let product = invoiceInfo["items"]
+        let count = product?.count
+        
+        if count! > 0 {
+            for i in 0..<invoiceInfo["items"]?.count {
+                let newLine = "\(items[i]["item"]!),\(items[i]["price"])\n"
+                csvText.append(newLine)
+            }
+        }
+        
+        do {
+            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            print("Failed to create file")
+            print("\(error)")
+        }
+        
+    }
+    
+    
     var invoiceInfo: [String: AnyObject]!
     
     
